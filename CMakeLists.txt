@@ -3,5 +3,7 @@ project(cdictionary)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES main.c)
+set(HEADERS dictionary.h storage_manager.h)
+
+set(SOURCE_FILES main.c storage_manager.c dictionary.c)
 add_executable(cdictionary ${SOURCE_FILES})
