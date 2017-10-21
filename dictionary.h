@@ -77,7 +77,16 @@ void add_entry_to_dictionary(struct Dictionary * dictionary, struct DictionaryEn
  */
 void deallocate_dictionary_entry(struct DictionaryEntry * entry);
 
+/**
+ * Prints all the words and definitions
+ * @param dictionary - pointer to dictionary
+ */
 void print_dictionary(struct Dictionary * dictionary);
+
+/**
+ * Prints word and definition
+ * @param entry - pointer to dictionary entry
+ */
 void print_dictionary_entry(struct DictionaryEntry * entry);
 
 #endif
