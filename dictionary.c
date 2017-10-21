@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "dictionary.h"
 
 void add_entry_to_dictionary(struct Dictionary * dict, struct DictionaryEntry * entry) {
@@ -44,4 +45,16 @@ void deallocate_dictionary_entry(struct DictionaryEntry * entry) {
     free(entry->definition);
     free(entry->word);
     free(entry);
+}
+
+void print_dictionary(struct Dictionary * dictionary) {
+    int i = 0;
+    while (i < dictionary->dictionary_size) {
+        print_dictionary_entry(dictionary->words[i]);
+        i++;
+    }
+}
+
+void print_dictionary_entry(struct DictionaryEntry * entry) {
+    printf("%s\n\t%s\n\n", entry->word, entry->definition);
 }

@@ -11,9 +11,10 @@ struct MenuPage {
     int actionsCount;
     char * displayString;
     ActionPointer * actionsArray;
+    int * exitFlag;
 };
 
-struct MenuPage * create_main_menu();
+struct MenuPage * create_main_menu(int * exitFlag);
 
 int show_menu_page(struct MenuPage * menuPage, struct Dictionary * dictionary);
 

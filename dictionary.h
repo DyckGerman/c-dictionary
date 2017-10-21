@@ -77,4 +77,7 @@ void add_entry_to_dictionary(struct Dictionary * dictionary, struct DictionaryEn
  */
 void deallocate_dictionary_entry(struct DictionaryEntry * entry);
 
+void print_dictionary(struct Dictionary * dictionary);
+void print_dictionary_entry(struct DictionaryEntry * entry);
+
 #endif

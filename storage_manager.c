@@ -21,9 +21,6 @@ struct Dictionary * load_dictionary_from_disk() {
 
     struct Dictionary * dictionary = create_dictionary(10);
 
-
-
-
     int readSuccess = 1;
     while(readSuccess != EOF) {
         char * wordBuffer = malloc(wordBufferSize);
@@ -40,9 +37,6 @@ struct Dictionary * load_dictionary_from_disk() {
             free(definitionBuffer);
         }
     }
-
-
-
 
     return dictionary;
 }

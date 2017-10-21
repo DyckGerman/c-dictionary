@@ -13,26 +13,29 @@ int get_choice(const char * displayString) {
     return choice;
 }
 
-
-
-struct MenuPage * create_main_menu() {
+struct MenuPage * create_main_menu(int * exitFlag) {
     struct MenuPage *mainMenu = malloc(sizeof(struct MenuPage));
-    mainMenu->actionsCount = 5;
+    mainMenu->exitFlag = exitFlag;
     mainMenu->displayString = mainMenuDisplayString;
+    mainMenu->actionsCount = 5;
     mainMenu->actionsArray = malloc(sizeof(ActionPointer) * 5);
     mainMenu->actionsArray[2] = &new_word;
-    mainMenu->actionsArray[1] = &print_dictionary;
-
+    mainMenu->actionsArray[1] = &show_dictionary;
+    mainMenu->actionsArray[3] = &find_word;
+    mainMenu->actionsArray[0] = &save_and_exit;
 
     return mainMenu;
 }
 
 int show_menu_page(struct MenuPage * menuPage, struct Dictionary * dictionary) {
+    system("clear");
     printf("%s",menuPage->displayString);
     int choice = 0;
-    int success = scanf("%d", &choice) > 0 ;
+    int success = scanf("%d", &choice) > 0;
     flush_istream();
-    if (success && choice < menuPage->actionsCount) {
+    if (choice == 0) {
+        *(menuPage->exitFlag) = 1;
+    } else if (success && choice < menuPage->actionsCount) {
         (*(menuPage->actionsArray + choice)) (dictionary);
     } else {
         return 1;
@@ -40,5 +43,3 @@ int show_menu_page(struct MenuPage * menuPage, struct Dictionary * dictionary) {
 
     return 0;
 }
-
-
