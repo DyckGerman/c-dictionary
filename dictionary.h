@@ -40,7 +40,7 @@ struct DictionaryEntry {
  * @param definitionSize - definition length
  * @return pointer to dictionary entry
  */
-struct DictionaryEntry * create_empty_dictionary_entry(int wordSize, int definitionSize);
+struct DictionaryEntry * create_empty_dictionary_entry(size_t wordSize, size_t definitionSize);
 
 /**
  * Creates new dictionary entry and initialises it
@@ -72,6 +72,13 @@ void deallocate_dictionary(struct Dictionary * dict);
 void add_entry_to_dictionary(struct Dictionary * dictionary, struct DictionaryEntry * entry);
 
 /**
+ * Deleted entry from the dictionary
+ * @param dictionary - pointer to dictionary
+ * @param index - index to delete
+ */
+void delete_entry_from_dictionary(struct Dictionary * dictionary, long index);
+
+/**
  * Frees the memory allocated for word and definition
  * @param entry - pointer to dictionary entry
  */
@@ -86,7 +93,8 @@ void print_dictionary(struct Dictionary * dictionary);
 /**
  * Prints word and definition
  * @param entry - pointer to dictionary entry
+ * @param index - index of the word
  */
-void print_dictionary_entry(struct DictionaryEntry * entry);
+void print_dictionary_entry(struct DictionaryEntry * entry, int index);
 
 #endif

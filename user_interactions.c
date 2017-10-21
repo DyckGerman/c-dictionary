@@ -22,6 +22,10 @@ void new_word(struct Dictionary * dictionary) {
     add_entry_to_dictionary(dictionary, newEntry);
 
     system("clear");
+    printf("%s","The word added. Press Enter to continue\n");
+    getchar();
+
+    system("clear");
 }
 
 void show_dictionary(struct Dictionary * dictionary) {
@@ -62,21 +66,44 @@ void find_word(struct Dictionary * dictionary) {
     scanf("%128[^\n]", prefixBuffer);
     flush_istream();
 
-    int * indices = get_occurence_indices(dictionary, prefixBuffer);
     system("clear");
+
+    int * indices = get_occurence_indices(dictionary, prefixBuffer);
 
     if (indices == NULL) {
         printf("%s","Couldn't find your word\n");
     } else {
         int * index = indices;
         while(*index != -1) {
-            print_dictionary_entry(dictionary->words[*index]);
+            print_dictionary_entry(dictionary->words[*index], *index);
             index++;
         }
     }
 
     printf("%s","Press Enter to continue\n");
     getchar();
+    system("clear");
+}
+
+void delete_word(struct Dictionary * dictionary) {
+    system("clear");
+    printf("%s","Enter the word number and press the Enter key\n");
+    int wordNumberBuffer;
+    scanf("%d", &wordNumberBuffer);
+    flush_istream();
+
+    if (wordNumberBuffer > dictionary->dictionary_size) {
+        printf("%s","The word number exceeds the dictionary size. Press Enter to continue\n");
+        getchar();
+        system("clear");
+        return;
+    }
+
+    delete_entry_from_dictionary(dictionary, wordNumberBuffer - 1);
+
+    printf("%s","The word has been deleted. Press Enter to continue\n");
+    getchar();
+
     system("clear");
 }
 

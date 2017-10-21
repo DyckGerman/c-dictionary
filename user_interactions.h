@@ -17,9 +17,15 @@ void show_dictionary(struct Dictionary * dictionary);
 
 /**
  * Finds and prints all words that contain prefix
- * @param dictionary - pointer ti dictionary
+ * @param dictionary - pointer to dictionary
  */
 void find_word(struct Dictionary * dictionary);
+
+/**
+ * Deletes the word
+ * @param dictionary - pointer to dictionary
+ */
+void delete_word(struct Dictionary * dictionary);
 
 /**
  * Saves the dictionary and closes the program

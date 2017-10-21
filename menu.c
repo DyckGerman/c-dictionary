@@ -23,6 +23,7 @@ struct MenuPage * create_main_menu(int * exitFlag) {
     mainMenu->actionsArray[1] = &show_dictionary;
     mainMenu->actionsArray[3] = &find_word;
     mainMenu->actionsArray[0] = &save_and_exit;
+    mainMenu->actionsArray[4] = &delete_word;
 
     return mainMenu;
 }
