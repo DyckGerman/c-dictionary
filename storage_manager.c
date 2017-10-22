@@ -8,7 +8,7 @@
 extern const char storagePath[];
 
 const long wordBufferSize = 128;
-const long definitionBufferSize = 1000;
+const long definitionBufferSize = 100000;
 
 struct Dictionary * load_dictionary_from_disk() {
     FILE *fp;
@@ -19,20 +19,23 @@ struct Dictionary * load_dictionary_from_disk() {
         exit(1);
     }
 
-    struct Dictionary * dictionary = create_dictionary(1000);
+    struct Dictionary * dictionary = create_dictionary();
+
+    // create long buffers for word and definition
+    char * wordBuffer = malloc(wordBufferSize);
+    char * definitionBuffer = malloc(definitionBufferSize);
 
     int readSuccess = 1;
     while(readSuccess != EOF) {
-        char * wordBuffer = malloc(wordBufferSize);
-        char * definitionBuffer = malloc(definitionBufferSize);
-
-        readSuccess = fscanf(fp, "%[^§]§%10000[^\n]\n", wordBuffer, definitionBuffer);
+        readSuccess = fscanf(fp, "%[^§]§%100000[^\n]\n", wordBuffer, definitionBuffer);
         if (readSuccess != EOF) {
+            // create entry for dictionary
             struct DictionaryEntry * entry = create_dictionary_entry(wordBuffer, definitionBuffer);
-            definitionBuffer = wordBuffer = NULL;
-            add_entry_to_dictionary(dictionary, entry);
 
+            // add new entry to the dictionary
+            add_entry_to_dictionary(dictionary, entry);
         } else {
+            // file ended, free buffers
             free(wordBuffer);
             free(definitionBuffer);
         }

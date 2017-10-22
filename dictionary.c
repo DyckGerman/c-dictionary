@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "dictionary.h"
 
 void add_entry_to_dictionary(struct Dictionary * dict, struct DictionaryEntry * entry) {
@@ -6,7 +7,7 @@ void add_entry_to_dictionary(struct Dictionary * dict, struct DictionaryEntry * 
     newNode->dictionaryEntry = entry;
 
     if (dict->firstWord == NULL) {
-        // create first node
+        // create first node if dictionary is empty
         dict->firstWord = newNode;
         newNode->previousNode = NULL;
     } else {
@@ -26,17 +27,21 @@ void delete_entry_from_dictionary(struct Dictionary * dictionary, long index) {
     struct LinkedListNode * listNode = dictionary->firstWord;
     int counter = 0;
 
+    // iterate over nodes list to find node with specified index
     while (counter < index) {
         listNode = listNode->nextNode;
         counter++;
     }
 
+    // create pointers to previous and next nodes
     struct LinkedListNode * previousNode = listNode->previousNode;
     struct LinkedListNode * nextNode = listNode->nextNode;
 
+    // deallocate underlying dictionary entry
     deallocate_dictionary_entry(listNode->dictionaryEntry);
 
     if (previousNode == NULL) {
+        // if node is the first
         dictionary->firstWord = nextNode;
         if (nextNode != NULL) {
             nextNode->previousNode = NULL;
@@ -46,6 +51,7 @@ void delete_entry_from_dictionary(struct Dictionary * dictionary, long index) {
     }
 
     if (nextNode == NULL) {
+        // if node is last
         dictionary->lastWord = previousNode;
         if (previousNode != NULL) {
             previousNode->nextNode = NULL;
@@ -56,10 +62,11 @@ void delete_entry_from_dictionary(struct Dictionary * dictionary, long index) {
 
     free(listNode);
 
+    // update dictionary size
     dictionary->dictionary_size--;
 }
 
-struct Dictionary * create_dictionary(long size) {
+struct Dictionary * create_dictionary() {
     struct Dictionary * dictionary = malloc(sizeof(struct Dictionary));
     dictionary->dictionary_size = 0;
     dictionary->firstWord = NULL;
@@ -68,21 +75,15 @@ struct Dictionary * create_dictionary(long size) {
     return dictionary;
 }
 
-struct DictionaryEntry * create_empty_dictionary_entry(size_t wordSize, size_t definitionSize) {
-    struct DictionaryEntry * result = malloc(sizeof(struct DictionaryEntry));
-    result->word = malloc(wordSize);
-    result->definition = malloc(definitionSize);
-    result->word[0] = '\0';
-    result->definition[0] = '\0';
-
-    return result;
-}
-
 struct DictionaryEntry * create_dictionary_entry(char * wordBuffer, char * definitionBuffer) {
     struct DictionaryEntry * result = malloc(sizeof(struct DictionaryEntry));
-    result->definition = definitionBuffer;
-    result->word = wordBuffer;
 
+    result->word = malloc(strlen(wordBuffer) + 1);
+    strcpy(result->word, wordBuffer);
+
+    result->definition = malloc(strlen(definitionBuffer) + 1);
+    strcpy(result->definition, definitionBuffer);
+    
     return result;
 }
 

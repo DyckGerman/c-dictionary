@@ -35,8 +35,7 @@ struct MenuPage * create_main_menu(int * exitFlag);
  * Shows abstract menu page
  * @param menuPage - pointer to menu page to show
  * @param dictionary - dictionary reference to pass to the action functions
- * @return
  */
-int show_menu_page(struct MenuPage * menuPage, struct Dictionary * dictionary);
+void show_menu_page(struct MenuPage * menuPage, struct Dictionary * dictionary);
 
 #endif

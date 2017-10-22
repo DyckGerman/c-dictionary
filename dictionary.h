@@ -51,15 +51,6 @@ struct DictionaryEntry {
 
 /**
  * Creates new dictionary entry and initialises it
- * with empty word and definition
- * @param wordSize - word length
- * @param definitionSize - definition length
- * @return pointer to dictionary entry
- */
-struct DictionaryEntry * create_empty_dictionary_entry(size_t wordSize, size_t definitionSize);
-
-/**
- * Creates new dictionary entry and initialises it
  * with word and definition passed as a function parameters
  * @param wordBuffer
  * @param definitionBuffer
@@ -72,7 +63,7 @@ struct DictionaryEntry * create_dictionary_entry(char * wordBuffer, char * defin
  * @param size - words count in dictionary
  * @return pointer to dictionary
  */
-struct Dictionary * create_dictionary(long size);
+struct Dictionary * create_dictionary();
 
 /**
  * Frees the memory allocated for dictionary
