@@ -10,6 +10,6 @@ new word§new definition\n
 ### CLI
 Tryes to be friendly
 
-### Missing parts (sorry)
+### Missing parts (sorry, the budget is over)
  - Unit tests
  - Index for faster words searching
