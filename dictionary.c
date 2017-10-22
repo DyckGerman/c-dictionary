@@ -2,30 +2,58 @@
 #include "dictionary.h"
 
 void add_entry_to_dictionary(struct Dictionary * dict, struct DictionaryEntry * entry) {
-    // assign new entry pointer to last element of dictionary entry pointers array
-    dict->words[dict->dictionary_size] = entry;
+    struct LinkedListNode * newNode = malloc(sizeof(struct LinkedListNode));
+    newNode->dictionaryEntry = entry;
+
+    if (dict->firstWord == NULL) {
+        // create first node
+        dict->firstWord = newNode;
+    } else {
+        // add new node to list end and update references
+        dict->lastWord->nextNode = newNode;
+        newNode->previousNode = dict->lastWord;
+    }
+
+    dict->lastWord = newNode;
+    newNode->nextNode = NULL;
 
     // update dictionary size
     dict->dictionary_size++;
 }
 
 void delete_entry_from_dictionary(struct Dictionary * dictionary, long index) {
-    // as we store the words as a linear array
-    // we are going to delete the word by placing the last one onto the
-    // position of the word that should be deleted
+    struct LinkedListNode * listNode = dictionary->firstWord;
+    int counter = 0;
 
-    struct DictionaryEntry * wordToDelete = dictionary->words[index];
-    struct DictionaryEntry * lastWord = dictionary->words[dictionary->dictionary_size - 1];
-
-    free(wordToDelete->word);
-    free(wordToDelete->definition);
-
-    if (index != dictionary->dictionary_size - 1) {
-        wordToDelete->word = lastWord->word;
-        wordToDelete->definition = lastWord->definition;
+    while (counter < index) {
+        listNode = listNode->nextNode;
+        counter++;
     }
 
-    lastWord->word = lastWord->definition = NULL;
+    struct LinkedListNode * previousNude = listNode->previousNode;
+    struct LinkedListNode * nextNude = listNode->nextNode;
+
+    deallocate_dictionary_entry(listNode->dictionaryEntry);
+
+    if (previousNude == NULL) {
+        dictionary->firstWord = listNode;
+        if (nextNude != NULL) {
+            nextNude->previousNode = NULL;
+        }
+    } else {
+        previousNude->nextNode = nextNude;
+    }
+
+    if (nextNude == NULL) {
+        dictionary->lastWord = previousNude;
+        if (previousNude != NULL) {
+            previousNude->nextNode = NULL;
+        }
+    } else {
+        nextNude->previousNode = previousNude;
+    }
+
+    free(listNode);
 
     dictionary->dictionary_size--;
 }
@@ -33,7 +61,9 @@ void delete_entry_from_dictionary(struct Dictionary * dictionary, long index) {
 struct Dictionary * create_dictionary(long size) {
     struct Dictionary * dictionary = malloc(sizeof(struct Dictionary));
     dictionary->dictionary_size = 0;
-    dictionary->words = malloc(size * sizeof(struct DictionaryEntry));
+    dictionary->firstWord = NULL;
+    dictionary->lastWord = NULL;
+
     return dictionary;
 }
 
@@ -56,9 +86,15 @@ struct DictionaryEntry * create_dictionary_entry(char * wordBuffer, char * defin
 }
 
 void deallocate_dictionary(struct Dictionary * dict) {
-    for (int wordNumber = 0; wordNumber < dict->dictionary_size; wordNumber++) {
-        deallocate_dictionary_entry(dict->words[wordNumber]);
+    struct LinkedListNode * listNode = dict->firstWord;
+
+    while (listNode != NULL) {
+        deallocate_dictionary_entry(listNode->dictionaryEntry);
+        struct LinkedListNode * nodeToDeallocate = listNode;
+        listNode = listNode->nextNode;
+        free(nodeToDeallocate);
     }
+
     free(dict);
 }
 
@@ -69,10 +105,13 @@ void deallocate_dictionary_entry(struct DictionaryEntry * entry) {
 }
 
 void print_dictionary(struct Dictionary * dictionary) {
+    struct LinkedListNode * listNode = dictionary->firstWord;
     int i = 0;
-    while (i < dictionary->dictionary_size) {
-        print_dictionary_entry(dictionary->words[i], i);
+
+    while (listNode != NULL) {
+        print_dictionary_entry(listNode->dictionaryEntry,i);
         i++;
+        listNode = listNode->nextNode;
     }
 }
 

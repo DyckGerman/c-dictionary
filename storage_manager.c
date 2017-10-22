@@ -43,7 +43,7 @@ struct Dictionary * load_dictionary_from_disk() {
 }
 
 void save_dictionary_to_disk(struct Dictionary * dictionary) {
-    FILE *fp;
+    /*FILE *fp;
     fp = fopen(storagePath, "w");
 
     if (fp == NULL) {
@@ -55,5 +55,5 @@ void save_dictionary_to_disk(struct Dictionary * dictionary) {
         fprintf(fp, "%s§%s\n", dictionary->words[i]->word, dictionary->words[i]->definition);
     }
 
-    fclose(fp);
+    fclose(fp);*/
 }

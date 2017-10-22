@@ -13,9 +13,25 @@ struct Dictionary {
     long dictionary_size;
 
     /**
-     * Array of pointers to dictionary entries
+     * First element of pointers array to dictionary entries
      */
-    struct DictionaryEntry ** words;
+    struct LinkedListNode * firstWord;
+
+    /**
+     * Last element of pointers array to dictionary entries
+     */
+    struct LinkedListNode * lastWord;
+};
+
+/**
+ * Structure that wraps DictionaryEntry for insertion
+ * into bidirectional linked list
+ */
+struct LinkedListNode {
+    struct LinkedListNode * nextNode;
+    struct LinkedListNode * previousNode;
+
+    struct DictionaryEntry * dictionaryEntry;
 };
 
 /**

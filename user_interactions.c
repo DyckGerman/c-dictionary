@@ -38,26 +38,28 @@ void show_dictionary(struct Dictionary * dictionary) {
     system("clear");
 }
 
-int * get_occurence_indices(struct Dictionary * dictionary, char * prefix) {
-    int * indicesArray = malloc(dictionary->dictionary_size + 1);
-    int * indicesArrayIterator = indicesArray;
+struct LinkedListNode * get_occurence_indices(struct Dictionary * dictionary, char * prefix) {
+    struct LinkedListNode * listNode = dictionary->firstWord;
+    struct LinkedListNode * matchedNode = NULL;
+    struct LinkedListNode * lastMatchedNode = NULL;
 
-    for (int i; i < dictionary->dictionary_size; i++) {
-        if (strstr(dictionary->words[i]->word, prefix) != NULL) {
-            *indicesArrayIterator = i;
-            indicesArrayIterator++;
+    while (listNode != NULL) {
+        if (strstr(listNode->dictionaryEntry->word, prefix) != NULL) {
+            if (matchedNode == NULL) {
+                matchedNode = lastMatchedNode = malloc(sizeof(struct LinkedListNode));
+            }
+
+            lastMatchedNode->nextNode = malloc(sizeof(struct LinkedListNode));
+            lastMatchedNode->nextNode = lastMatchedNode;
+
+            lastMatchedNode->dictionaryEntry = listNode->dictionaryEntry;
+            lastMatchedNode->nextNode = NULL;
         }
+
+        listNode = listNode->nextNode;
     }
 
-    *indicesArrayIterator = -1;
-
-    if (indicesArrayIterator == indicesArray) {
-        // iterator didn't move, no occurences found
-        free(indicesArray);
-        return NULL;
-    } else {
-        return indicesArray;
-    }
+    return matchedNode;
 }
 
 void find_word(struct Dictionary * dictionary) {
@@ -69,15 +71,17 @@ void find_word(struct Dictionary * dictionary) {
 
     system("clear");
 
-    int * indices = get_occurence_indices(dictionary, prefixBuffer);
+    struct LinkedListNode * indices = get_occurence_indices(dictionary, prefixBuffer);
 
     if (indices == NULL) {
         printf("%s","Couldn't find your word\n");
     } else {
-        int * index = indices;
-        while(*index != -1) {
-            print_dictionary_entry(dictionary->words[*index], *index);
-            index++;
+        struct LinkedListNode * iterator = indices;
+
+        int index = 1;
+        while(iterator != NULL) {
+            print_dictionary_entry(iterator->dictionaryEntry, index);
+            iterator = iterator->nextNode;
         }
     }
 
@@ -92,6 +96,16 @@ void delete_word(struct Dictionary * dictionary) {
     int wordNumberBuffer;
     scanf("%d", &wordNumberBuffer);
     flush_istream();
+
+    if (dictionary->firstWord == NULL) {
+        printf("%s","There are no words in the dictionary. Press Enter to continue\n");
+        getchar();
+    }
+
+    if (dictionary->firstWord == NULL) {
+        printf("%s","There are no words in the dictionary. Press Enter to continue\n");
+        getchar();
+    }
 
     if (wordNumberBuffer > dictionary->dictionary_size) {
         printf("%s","The word number exceeds the dictionary size. Press Enter to continue\n");
