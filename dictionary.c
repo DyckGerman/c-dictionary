@@ -8,6 +8,7 @@ void add_entry_to_dictionary(struct Dictionary * dict, struct DictionaryEntry * 
     if (dict->firstWord == NULL) {
         // create first node
         dict->firstWord = newNode;
+        newNode->previousNode = NULL;
     } else {
         // add new node to list end and update references
         dict->lastWord->nextNode = newNode;
@@ -30,27 +31,27 @@ void delete_entry_from_dictionary(struct Dictionary * dictionary, long index) {
         counter++;
     }
 
-    struct LinkedListNode * previousNude = listNode->previousNode;
-    struct LinkedListNode * nextNude = listNode->nextNode;
+    struct LinkedListNode * previousNode = listNode->previousNode;
+    struct LinkedListNode * nextNode = listNode->nextNode;
 
     deallocate_dictionary_entry(listNode->dictionaryEntry);
 
-    if (previousNude == NULL) {
-        dictionary->firstWord = listNode;
-        if (nextNude != NULL) {
-            nextNude->previousNode = NULL;
+    if (previousNode == NULL) {
+        dictionary->firstWord = nextNode;
+        if (nextNode != NULL) {
+            nextNode->previousNode = NULL;
         }
     } else {
-        previousNude->nextNode = nextNude;
+        previousNode->nextNode = nextNode;
     }
 
-    if (nextNude == NULL) {
-        dictionary->lastWord = previousNude;
-        if (previousNude != NULL) {
-            previousNude->nextNode = NULL;
+    if (nextNode == NULL) {
+        dictionary->lastWord = previousNode;
+        if (previousNode != NULL) {
+            previousNode->nextNode = NULL;
         }
     } else {
-        nextNude->previousNode = previousNude;
+        nextNode->previousNode = previousNode;
     }
 
     free(listNode);

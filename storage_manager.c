@@ -43,7 +43,7 @@ struct Dictionary * load_dictionary_from_disk() {
 }
 
 void save_dictionary_to_disk(struct Dictionary * dictionary) {
-    /*FILE *fp;
+    FILE *fp;
     fp = fopen(storagePath, "w");
 
     if (fp == NULL) {
@@ -51,9 +51,12 @@ void save_dictionary_to_disk(struct Dictionary * dictionary) {
         exit(1);
     }
 
-    for (int i = 0; i < dictionary->dictionary_size; i++) {
-        fprintf(fp, "%s§%s\n", dictionary->words[i]->word, dictionary->words[i]->definition);
+    struct LinkedListNode * listNode = dictionary->firstWord;
+
+    while (listNode != NULL) {
+        fprintf(fp, "%s§%s\n", listNode->dictionaryEntry->word, listNode->dictionaryEntry->definition);
+        listNode = listNode->nextNode;
     }
 
-    fclose(fp);*/
+    fclose(fp);
 }
