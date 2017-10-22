@@ -5,7 +5,7 @@
 
 #include "storage_manager.h"
 
-extern const char storagePath[];
+extern char * storagePath;
 
 const long wordBufferSize = 128;
 const long definitionBufferSize = 100000;

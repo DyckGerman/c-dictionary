@@ -6,12 +6,15 @@
 #include "storage_manager.h"
 #include "user_interactions.h"
 
-const char storagePath[]  = "../test.txt";
+char * storagePath = "../test.txt";
 const int MAX_WORD_SIZE = 128;
 const int MAX_DEFINITION_SIZE = 1000;
 
 
-int main() {
+int main(int argc, char **argv) {
+    if (argc > 1)
+        storagePath = argv[1];
+
     // Initialize dictionary
     struct Dictionary * dict = load_dictionary_from_disk();
 
