@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "dictionary.h"
+#include "storage_manager.h"
 #include "user_interactions.h"
 
 extern unsigned int MAX_WORD_SIZE;
@@ -107,8 +108,8 @@ void delete_word(struct Dictionary * dictionary) {
     system("clear");
 }
 
-void save_and_exit() {
-    exit(0);
+void save_dictionary(struct Dictionary * dictionary) {
+    save_dictionary_to_disk(dictionary);
 }
 
 void flush_istream() {

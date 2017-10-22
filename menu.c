@@ -4,7 +4,7 @@
 
 ActionPointer * actions;
 
-char * mainMenuDisplayString = "1. Print the dictionary\n2. Add word\n3. Find definition\n4. Delete word\n0. Exit\n\n";
+char * mainMenuDisplayString = "1. Print the dictionary\n2. Add word\n3. Find definition\n4. Delete word\n5. Save dictionary\n0. Exit\n\n";
 
 int get_choice(const char * displayString) {
     printf("%s", displayString);
@@ -17,13 +17,14 @@ struct MenuPage * create_main_menu(int * exitFlag) {
     struct MenuPage *mainMenu = malloc(sizeof(struct MenuPage));
     mainMenu->exitFlag = exitFlag;
     mainMenu->displayString = mainMenuDisplayString;
-    mainMenu->actionsCount = 5;
+    mainMenu->actionsCount = 6;
     mainMenu->actionsArray = malloc(sizeof(ActionPointer) * 5);
     mainMenu->actionsArray[2] = &new_word;
     mainMenu->actionsArray[1] = &show_dictionary;
     mainMenu->actionsArray[3] = &find_word;
-    mainMenu->actionsArray[0] = &save_and_exit;
     mainMenu->actionsArray[4] = &delete_word;
+    mainMenu->actionsArray[5] = &save_dictionary;
+
 
     return mainMenu;
 }

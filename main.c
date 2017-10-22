@@ -19,7 +19,11 @@ int main() {
     struct MenuPage * mainMenu = create_main_menu(&exitFlag);
 
     while(!exitFlag) {
-        show_menu_page(mainMenu, dict);
+        int success = show_menu_page(mainMenu, dict);
+        if (success > 0) {
+            printf("%s","Error. Please press enter to continue\n");
+            getchar();
+        }
     }
 
 

@@ -30,7 +30,7 @@ void delete_word(struct Dictionary * dictionary);
 /**
  * Saves the dictionary and closes the program
  */
-void save_and_exit();
+void save_dictionary(struct Dictionary * dictionary);
 
 /**
  * Seeks input stream to the end of line symbol

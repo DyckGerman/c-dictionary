@@ -19,7 +19,7 @@ struct Dictionary * load_dictionary_from_disk() {
         exit(1);
     }
 
-    struct Dictionary * dictionary = create_dictionary(10);
+    struct Dictionary * dictionary = create_dictionary(1000);
 
     int readSuccess = 1;
     while(readSuccess != EOF) {
@@ -38,5 +38,22 @@ struct Dictionary * load_dictionary_from_disk() {
         }
     }
 
+    fclose(fp);
     return dictionary;
+}
+
+void save_dictionary_to_disk(struct Dictionary * dictionary) {
+    FILE *fp;
+    fp = fopen(storagePath, "w");
+
+    if (fp == NULL) {
+        printf("Failed to save dictionary to file");
+        exit(1);
+    }
+
+    for (int i = 0; i < dictionary->dictionary_size; i++) {
+        fprintf(fp, "%s§%s\n", dictionary->words[i]->word, dictionary->words[i]->definition);
+    }
+
+    fclose(fp);
 }
