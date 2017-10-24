@@ -1,5 +1,7 @@
 # CLI based dictionary
 
+Please check the [issue](https://github.com/DyckGerman/c-dictionary/issues/1) first 
+
 ### File format
 The '§' symbol separates the word and its definition. `\n` symbol separates the words. No `\n` symbols are allowed inside the word or definition (sorry).
 ```sh
