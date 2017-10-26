@@ -6,7 +6,7 @@
 #include "storage_manager.h"
 #include "user_interactions.h"
 
-char * storagePath = "../test.txt";
+char * storagePath = "./test.txt";
 const int MAX_WORD_SIZE = 128;
 const int MAX_DEFINITION_SIZE = 1000;
 
