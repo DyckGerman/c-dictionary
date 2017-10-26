@@ -19,8 +19,8 @@ struct MenuPage * create_main_menu(int * exitFlag) {
     mainMenu->displayString = mainMenuDisplayString;
 
     // fill the actions array with function pointers
-    mainMenu->actionsCount = 5;
-    mainMenu->actionsArray = malloc(sizeof(ActionPointer) * 5);
+    mainMenu->actionsCount = 6;
+    mainMenu->actionsArray = malloc(sizeof(ActionPointer) * mainMenu->actionsCount);
     mainMenu->actionsArray[1] = &show_dictionary;
     mainMenu->actionsArray[2] = &new_word;
     mainMenu->actionsArray[3] = &find_word;
