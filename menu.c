@@ -9,7 +9,7 @@ char * mainMenuDisplayString = "1. Print the dictionary\n2. Add word\n3. Find de
 int get_choice(const char * displayString) {
     printf("%s", displayString);
     int choice = 0;
-    int success = scanf("%d", &choice);
+    scanf("%d", &choice);
     return choice;
 }
 
